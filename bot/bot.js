@@ -1,16 +1,18 @@
-import pkg from "whatsapp-web.js";
-const { Client, LocalAuth } = pkg;
-import qrcode from "qrcode-terminal";
+import express from 'express';
+import { Client, LocalAuth } from 'whatsapp-web.js';
+import qrcode from 'qrcode-terminal';
 
-import { Commands } from "./commands.js";
-const command = new Commands()
+const app = express();
+
+// Defina a porta de acordo com a variável de ambiente PORT fornecida pelo Render
+const port = process.env.PORT || 10000;
 
 const client = new Client({
     authStrategy: new LocalAuth(),
 });
 
 client.on("ready", () => {
-    console.log("cliente conectado");
+    console.log("Cliente WhatsApp conectado!");
 });
 
 client.on("qr", qr => {
@@ -22,33 +24,34 @@ client.on("message", async (msg) => {
 
     if(commandUser.startsWith("add")){
         const medicine = commandUser.replace("add", "").trim();
-        command.post(medicine)
-
-        return msg.reply(`_${medicine}_ Adicionado na falta!`)
-
-        
-        
-    };
+        // Supondo que a função 'command.post' seja de um arquivo importado
+        command.post(medicine);
+        return msg.reply(`_${medicine}_ Adicionado na falta!`);
+    }
 
     if (commandUser === "falta?") {
-      const data = await command.get()
-      msg.reply(data)
+      const data = await command.get();
+      msg.reply(data);
     }
 
     if(commandUser.startsWith("/")){
         const medicine = commandUser.replace("/", "").trim();
         const getMedicine = await command.getMedicine(medicine);
-        
         msg.reply(getMedicine);
     }
     
     if(commandUser.startsWith("esc")){
         const medicine = commandUser.replace("esc", "").trim();
-        console.log(medicine)
+        console.log(medicine);
         command.updateMedicine(medicine);
-
-        return msg.reply(`${medicine} Saiu da falta!`)
-    };
+        return msg.reply(`${medicine} Saiu da falta!`);
+    }
 });
 
+// Inicializa o cliente WhatsApp
 client.initialize();
+
+// Configuração do Express para escutar na porta correta
+app.listen(port, () => {
+    console.log(`Servidor Express rodando na porta ${port}`);
+});
