@@ -1,5 +1,7 @@
 import fastify from 'fastify';
-import { Client, LocalAuth } from 'whatsapp-web.js';
+import pkg from "whatsapp-web.js";
+const { Client, LocalAuth } =  pkg;
+
 import qrcode from 'qrcode-terminal';
 
 const app = fastify();
