@@ -2,6 +2,9 @@ import  fastify  from "fastify";
 import  fastifycors  from "fastify-cors"
 import { Database } from "./database.js";
 
+import  dontenv  from "dotenv";
+dontenv.config()
+
 const database = new Database();
 
 const app = fastify();
