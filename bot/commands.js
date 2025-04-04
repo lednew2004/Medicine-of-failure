@@ -1,7 +1,7 @@
 export class Commands {
 
     async get() {
-        const response = await fetch("http://localhost:3030/failure");
+        const response = await fetch("https://medicine-of-failure.onrender.com/failure");
         const data = await response.json()
 
         // Acumulando a lista de medicamentos em falta
@@ -25,7 +25,7 @@ export class Commands {
     };
 
     async post(medicine){
-             await fetch("http://localhost:3030/failure", {
+             await fetch("https://medicine-of-failure.onrender.com/failure", {
                     method: "POST", 
                     headers: {
                         "Content-Type": "application/json",},
@@ -39,7 +39,7 @@ export class Commands {
     }
 
     async getMedicine(medicine){
-        const response = await fetch(`http://localhost:3030/failure?search=${medicine}`);
+        const response = await fetch(`https://medicine-of-failure.onrender.com/failure?search=${medicine}`);
         const [data] = await response.json();
 
         if(medicine === data.medicine && data.failure === true){
@@ -50,7 +50,7 @@ export class Commands {
     }
 
     async updateMedicine(medicine){
-        const response = await fetch(`http://localhost:3030/failure?search=${medicine}`, {
+        const response = await fetch(`https://medicine-of-failure.onrender.com/failure?search=${medicine}`, {
             method: "PUT",
             headers: {
             "Content-Type": "application/json",},
