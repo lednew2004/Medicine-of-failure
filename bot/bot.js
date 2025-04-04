@@ -1,11 +1,11 @@
-import express from 'express';
+import fastify from 'fastify';
 import { Client, LocalAuth } from 'whatsapp-web.js';
 import qrcode from 'qrcode-terminal';
 
-const app = express();
+const app = fastify();
 
 // Defina a porta de acordo com a variável de ambiente PORT fornecida pelo Render
-const port = process.env.PORT || 10000;
+const port = process.env.port || 10000;
 
 const client = new Client({
     authStrategy: new LocalAuth(),
@@ -52,6 +52,8 @@ client.on("message", async (msg) => {
 client.initialize();
 
 // Configuração do Express para escutar na porta correta
-app.listen(port, () => {
+app.listen({
+    port: port
+}, () => {
     console.log(`Servidor Express rodando na porta ${port}`);
 });
