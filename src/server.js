@@ -64,4 +64,10 @@ app.put("/failure", (request, response) => {
 
 app.listen({
     port: port
+}, (err, address) => {
+    if (err) {
+        console.error(err);
+        process.exit(1);  // Encerra o processo caso haja erro
+    }
+    console.log(`Servidor está ouvindo na porta ${address}`);
 });
