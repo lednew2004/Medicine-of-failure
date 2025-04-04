@@ -5,7 +5,7 @@ import { Database } from "./database.js";
 const database = new Database();
 
 const app = fastify();
-const port = process.env.PORT || 3030; // Usa a porta do ambiente ou 3030 como fallback
+const port = process.env.PORT || 2020; // Usa a porta do ambiente ou 3030 como fallback
 
 
 app.register(fastifycors, {
@@ -64,10 +64,4 @@ app.put("/failure", (request, response) => {
 
 app.listen({
     port: port
-}, (err, address) => {
-    if (err) {
-        console.error(err);
-        process.exit(1);  // Encerra o processo caso haja erro
-    }
-    console.log(`Servidor está ouvindo na porta ${address}`);
 });
