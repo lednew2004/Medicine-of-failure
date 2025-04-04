@@ -3,6 +3,8 @@ import pkg from "whatsapp-web.js";
 const { Client, LocalAuth } =  pkg;
 
 import qrcode from 'qrcode-terminal';
+import { Commands } from "./commands.js";
+const command = new Commands();
 
 const app = express();
 
