@@ -55,7 +55,10 @@ client.initialize();
 
 // Configuração do Express para escutar na porta correta
 app.listen({
-    port: port
-}, () => {
-    console.log(`Servidor Express rodando na porta ${port}`);
-});
+    port: port,
+    host: "0.0.0.0"
+}).then(() => {
+    console.log(`Servidor rodando na porta ${port}`);
+  }).catch(err => {
+    console.error('Erro ao iniciar o servidor:', err);
+  });
