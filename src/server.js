@@ -5,7 +5,7 @@ import { Database } from "./database.js";
 const database = new Database();
 
 const app = fastify();
-const port = process.env.PORT || 3030; // Usa a porta do ambiente ou 3030 como fallback
+const port = process.env.PORT || 3030
 
 
 app.register(fastifycors, {
