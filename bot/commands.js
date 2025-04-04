@@ -1,60 +1,69 @@
 export class Commands {
 
+    // Método para obter a lista de medicamentos em falta
     async get() {
         const response = await fetch("https://medicine-of-failure.onrender.com/failure");
-        const data = await response.json()
+        const data = await response.json();
 
-        // Acumulando a lista de medicamentos em falta
         let medicineList = "*_Lista de medicamentos em falta:_*\n\n";
 
-        // Adicionando cada medicamento à lista
+        if (!data || data.length === 0) {
+            return "Não há medicamentos em falta no momento.";
+        }
+
         data.forEach(medicine => {
             if (medicine.failure) {
                 medicineList += `_${medicine.medicine}_\n`;
             }
         });
 
-        // Verificando se há medicamentos em falta e enviando a mensagem
+        // Se não houver medicamentos com "failure: true", então informa que não há medicamentos em falta
         if (medicineList === "*_Lista de medicamentos em falta:_*\n\n") {
-            // Caso não haja medicamentos em falta
             return "Não há medicamentos em falta no momento.";
-        } else {
-            // Enviando todos os medicamentos em uma única mensagem
-            return medicineList;
         }
+
+        return medicineList;
     };
 
-    async post(medicine){
-             await fetch("https://medicine-of-failure.onrender.com/failure", {
-                    method: "POST", 
-                    headers: {
-                        "Content-Type": "application/json",},
-                        body: JSON.stringify( { 
-                            medicine,
-                            failure: true
-                        })
-                    })
-
-
+    // Método para adicionar medicamento à lista de faltas
+    async post(medicine) {
+        await fetch("https://medicine-of-failure.onrender.com/failure", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+                medicine,
+                failure: true
+            })
+        });
     }
 
-    async getMedicine(medicine){
+    // Método para buscar um medicamento específico
+    async getMedicine(medicine) {
         const response = await fetch(`https://medicine-of-failure.onrender.com/failure?search=${medicine}`);
-        const [data] = await response.json();
+        const data = await response.json();
 
-        if(medicine === data.medicine && data.failure === true){
-            return `_O medicamento solicitado: *${medicine}* está na falta!_ \n\n _ele foi adicionado á falta em ${data.date}_`
+        // Verifica se a resposta contém dados e se o medicamento está na falta
+        if (data && data.length > 0) {
+            const foundMedicine = data.find(item => item.medicine.toLowerCase() === medicine.toLowerCase());
+            
+            if (foundMedicine && foundMedicine.failure === true) {
+                return `_O medicamento solicitado: *${medicine}* está na falta!_ \n\n _Ele foi adicionado à falta em ${foundMedicine.date}_`;
+            }
         }
 
-        return `_O medicamento solicitado: ${medicine} não ésta na falta!_`
+        return `_O medicamento solicitado: ${medicine} não está na falta!_`;
     }
 
-    async updateMedicine(medicine){
-        const response = await fetch(`https://medicine-of-failure.onrender.com/failure?search=${medicine}`, {
+    // Método para atualizar o status do medicamento (remover da falta)
+    async updateMedicine(medicine) {
+        await fetch(`https://medicine-of-failure.onrender.com/failure?search=${medicine}`, {
             method: "PUT",
             headers: {
-            "Content-Type": "application/json",},
-            body: JSON.stringify( { 
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
                 medicine,
                 failure: false
             })
