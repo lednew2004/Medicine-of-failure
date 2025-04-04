@@ -1,0 +1,32 @@
+{
+  "failures": [
+    {
+      "medicine": "paracetamol",
+      "failure": true,
+      "date": "03 de abril de 2025 às 22:34:01"
+    },
+    { "medicine": "petivit", "failure": false, "date": null },
+    { "medicine": "buscopam composto", "failure": false, "date": null },
+    { "medicine": "enterorgemina", "failure": false, "date": null },
+    {
+      "medicine": "losartana",
+      "failure": true,
+      "date": "04 de abril de 2025 às 05:32:35"
+    },
+    {
+      "medicine": "apetiviton",
+      "failure": true,
+      "date": "04 de abril de 2025 às 05:56:05"
+    },
+    {
+      "medicine": "dipirona",
+      "failure": true,
+      "date": "04 de abril de 2025 às 05:56:56"
+    },
+    {
+      "medicine": "petivit",
+      "failure": true,
+      "date": "04 de abril de 2025 às 05:57:01"
+    }
+  ]
+}
