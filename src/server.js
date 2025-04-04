@@ -15,7 +15,7 @@ app.register(fastifycors, {
 });
 
 // Definir a porta usando a variável de ambiente, com fallback para 3000
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;  // Se a variável de ambiente PORT não existir, a porta 3000 será usada
 
 app.post("/failure", (request, response) => {
   const { medicine } = request.body;
@@ -59,9 +59,10 @@ app.put("/failure", (request, response) => {
   return response.status(200).send();
 });
 
-// Iniciar o servidor
+// Iniciar o servidor no endereço 0.0.0.0 e na porta definida
 app.listen({
   port: port,
+  host: '0.0.0.0'  // Certifique-se de que o servidor escuta em 0.0.0.0
 }).then(() => {
   console.log(`Servidor rodando na porta ${port}`);
 }).catch(err => {
