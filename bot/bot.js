@@ -27,10 +27,11 @@ client.on("message", async (msg) => {
     const commandUser = msg.body.toLowerCase();
 
     if(commandUser.startsWith("add")){
+        console.log(msg)
         const medicine = commandUser.replace("add", "").trim();
         // Supondo que a função 'command.post' seja de um arquivo importado
         command.post(medicine);
-        return msg.reply(`_${medicine}_ Adicionado na falta!`);
+        return msg.reply(`💊 _${medicine.toUpperCase()}_ Adicionado na falta! 📄`);
     }
 
     if (commandUser === "falta?") {

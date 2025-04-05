@@ -5,7 +5,7 @@ export class Commands {
         const response = await fetch("https://medicine-of-failure.onrender.com/failure");
         const data = await response.json();
 
-        let medicineList = "*_Lista de medicamentos em falta:_*\n\n";
+        let medicineList = "💻📌 *_Lista De Medicamentos Em Falta:_*\n\n";
 
         if (!data || data.length === 0) {
             return "Não há medicamentos em falta no momento.";
@@ -13,7 +13,7 @@ export class Commands {
 
         data.forEach(medicine => {
             if (medicine.failure) {
-                medicineList += `_${medicine.medicine}_\n`;
+                medicineList += `- _${medicine.medicine.toUpperCase()} 💊_\n ______________________ \n`;
             }
         });
 
@@ -49,7 +49,7 @@ export class Commands {
             const foundMedicine = data.find(item => item.medicine.toLowerCase() === medicine.toLowerCase());
             
             if (foundMedicine && foundMedicine.failure === true) {
-                return `_O medicamento solicitado: *${medicine}* está na falta!_ \n\n _Ele foi adicionado à falta em ${foundMedicine.date}_`;
+                return `🔎💻 _O medicamento solicitado: *${medicine.toUpperCase()}* está na falta!_ \n\n 📆 _Ele foi adicionado à falta em *${foundMedicine.date.toUpperCase()}*_`;
             }
         }
 
